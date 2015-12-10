@@ -13,7 +13,7 @@
   <ul class="nav navbar-nav">
   {% if depth == 1 %}
   {% for page in toplevel %}
-    {% if page|check_page_permission:user %}
+    {% if page|check_page_permission:request.user %}
       <li class="{% if page|is_equal_or_parent_of:current %}active{% endif %}">
         <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
       </li>
@@ -21,7 +21,7 @@
   {% endfor %}
   {% else %}
   {% for page in toplevel %}
-    {% if page|check_page_permission:user %}
+    {% if page|check_page_permission:request.user %}
     {% feincms_nav page level=level2 depth=1 as sublevel %}
     {% if sublevel|length == 0 %}
     <li {% if page|is_equal_or_parent_of:current %}class="active"{% endif %}>
@@ -32,7 +32,7 @@
       <a class="dropdown-toggle" href="{{ page.get_absolute_url }}">{{ page.title }} <span class="caret"></span></a>
       <ul class="dropdown-menu">
       {% for subpage in sublevel %}
-      {% if subpage|check_page_permission:user %}
+      {% if subpage|check_page_permission:request.user %}
         <li class="{% if subpage|is_equal_or_parent_of:current %}active{% endif %}">
           <a href="{{ subpage.get_absolute_url }}">{{ subpage.title }}</a>
         </li>
